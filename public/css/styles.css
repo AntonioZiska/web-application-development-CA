@@ -1,0 +1,19 @@
+body {
+  background-color: lightgreen;
+}
+
+h2 {
+  color: red;
+}
+
+.movieShortDesc {
+  color: blue;
+}
+
+img {
+  width: 100px;
+}
+
+a:link {
+  text-decoration: none;
+}

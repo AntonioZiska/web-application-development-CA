@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("./partials/head.ejs") %>
+  <body>
+    <%- include("./partials/navtest.ejs") %>
+
+    <h1>Welcome to my movie website!</h1>
+    <h3>My movie entries...</h3>
+
+    <% if (movies.length) { %> <% movies.forEach(movie => { %>
+    <a
+      href="/movietest/<%= movie._id %>"
+      style="display: flex; align-items: center; gap: 10px"
+    >
+      <% if(movie.imgPoster) { %>
+      <img
+        src="<%= movie.imgPoster %>"
+        alt="Poster of <%= movie.title %>"
+        style="width: 50px; height: auto"
+      />
+      <% } %>
+      <h2><%= movie.title %> (<%= movie.year %>)</h2>
+    </a>
+    <hr />
+    <% }) %> <% } else { %>
+    <p>Sorry, there are no movies yet...</p>
+    <% } %> <%- include("./partials/footer.ejs") %>
+  </body>
+</html>

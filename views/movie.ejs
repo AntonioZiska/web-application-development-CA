@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include("./partials/head.ejs") %>
+
+<body>
+  <%- include("./partials/nav.ejs") %>
+  <div id="viewMovie">
+    <h3>Movie details</h3>
+    <h2>
+      <%= movie.title %>
+    </h2>
+
+    <p class="movieShortDesc">
+      <%= movie.shortDesc %>
+    </p>
+
+    <p>
+      <%= movie.body %>
+    </p>
+
+    <p>Created on:
+      <%= movie.createdAt %>
+    </p>
+
+    <p>Updated on:
+      <%= movie.updatedAt %>
+    </p>
+    <br>
+    <button id="deleteBtn" data-id="<%= movie._id %>">Delete movie</button>
+    <button id="editBtn">Edit movie</button>
+  </div>
+
+  <div id="editMovie" hidden>
+    <h3>Edit movie details</h3>
+    <form action="/:id" method="post">
+      <input type="text" required name="id" value="<%= movie._id %>" hidden><br>
+      <label>Title</label><br>
+      <input type="text" required name="title" value="<%= movie.title %>"><br>
+      <label>Short description</label><br>
+      <input type="text" required name="shortDesc" value="<%= movie.shortDesc %>"><br>
+      <label>Body</label><br>
+      <textarea cols="30" rows="10" required name="body"><%= movie.body %></textarea><br>
+      <button id="saveBtn">Save movie</button>
+    </form>
+  </div>
+
+
+  <%- include("./partials/footer.ejs") %>
+
+  <script>
+    const deleteBtnElement = document.getElementById("deleteBtn");
+    const viewMovieDivElement = document.getElementById("viewMovie");
+    const editMocieDivElement = document.getElementById("editMovie");
+    const editBtnElement = document.getElementById("editBtn");
+    const saveBtnElement = document.getElementById("saveBtn");
+
+
+    deleteBtnElement.addEventListener("click", (e) => {
+      const backEndPoint = `/${deleteBtnElement.dataset.id}`;
+
+      fetch(backEndPoint, {
+          method: "DELETE"
+        })
+        .then((response) => response.json())
+        .then((responseJson) => window.location.href = responseJson.redirect)
+        .catch((error) => console.log(error));
+    });
+
+    editBtnElement.addEventListener("click", (e) => {
+      viewMovieDivElement.style.display = "none";
+      editMovieDivElement.style.display = "block";
+    });
+
+    saveBtnElement.addEventListener("click", (e) => {
+      viewMovieDivElement.style.display = "block";
+      editMovieDivElement.style.display = "none";
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("./partials/head.ejs") %>
+
+  <body>
+    <%- include("./partials/nav.ejs") %>
+
+    <h1>Welcome to my movie website!</h1>
+    <h3>My movie entries...</h3>
+    <% if (movies.length) { movies.forEach(movies=> { %>
+    <a href="/<%= movies._id %>">
+      <h2><%= movies.title %></h2>
+
+      <p class="movieShortDesc"><%= movies.shortDesc %></p>
+    </a>
+
+    <hr />
+    <% }); } else { %>
+    <p>Sorry, there are no movies yet...</p>
+
+    <% } %> <%- include("./partials/footer.ejs") %>
+  </body>
+</html>
