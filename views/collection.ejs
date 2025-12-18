@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("./partials/head.ejs") %>
+  <body class="history-body">
+    <%- include("./partials/nav.ejs") %>
+
+    <h1><%= collection.name %></h1>
+
+    <% if (collection.movies.length) { %>
+    <div class="movie-grid">
+      <% collection.movies.forEach((movie, i) => { %>
+      <a
+        href="/movie/<%= movie._id %>"
+        class="movie-card <%= i % 2 === 0 ? 'left' : 'right' %>"
+      >
+        <% if (movie.imgPoster) { %>
+        <img src="<%= movie.imgPoster %>" alt="Poster" class="movie-poster" />
+        <% } %>
+
+        <div class="movie-info">
+          <h3><%= movie.title %> (<%= movie.year %>)</h3>
+        </div>
+      </a>
+      <% }) %>
+    </div>
+    <% } else { %>
+    <p>No movies in this collection.</p>
+    <% } %>
+  </body>
+</html>

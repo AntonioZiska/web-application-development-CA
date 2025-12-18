@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <%- include("./partials/head.ejs") %>
+  <body>
+    <%- include("./partials/nav.ejs") %>
+
+    <h2>Select the correct movie</h2>
+
+    <% choices.forEach(movie => { %>
+    <form action="/create/choose" method="POST">
+      <h3><%= movie["#TITLE"] %> (<%= movie["#YEAR"] %>)</h3>
+
+      <% if (movie["#IMG_POSTER"]) { %> <img src="<%= movie["#IMG_POSTER"] %>"
+      style="width:100px;"> <% } %>
+
+      <p>Actors: <%= movie["#ACTORS"] %></p>
+
+      <input
+        type="hidden"
+        name="movieData"
+        value="<%= JSON.stringify(movie) %>"
+      />
+      <button>Select this</button>
+    </form>
+    <% }) %>
+  </body>
+</html>

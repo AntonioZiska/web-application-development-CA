@@ -1,82 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
+  <%- include("./partials/head.ejs") %>
+  <body>
+    <%- include("./partials/nav.ejs") %>
 
-<%- include("./partials/head.ejs") %>
+    <div class="movie-page-grid">
+      <div class="movie-details">
+        <h2><%= movie.title %> (<%= movie.year %>)</h2>
+        <p><strong>Actors:</strong> <%= movie.actors %></p>
+        <p><strong>Also known as:</strong> <%= movie.aka %></p>
 
-<body>
-  <%- include("./partials/nav.ejs") %>
-  <div id="viewMovie">
-    <h3>Movie details</h3>
-    <h2>
-      <%= movie.title %>
-    </h2>
+        <hr />
 
-    <p class="movieShortDesc">
-      <%= movie.shortDesc %>
-    </p>
+        <button class="btn-delete" onclick="deleteMovie('<%= movie._id %>')">
+          Delete
+        </button>
 
-    <p>
-      <%= movie.body %>
-    </p>
+        <button
+          class="btn-favourite"
+          id="favouriteBtn"
+          onclick="togglefavourite('<%= movie._id %>')"
+        >
+          <%= movie.favourite ? "Remove from favourites" : "Add to favourites"
+          %>
+        </button>
 
-    <p>Created on:
-      <%= movie.createdAt %>
-    </p>
+        <div style="margin-top: 10px">
+          <select id="collectionSelect">
+            <% collections.forEach((col) => { %>
+            <option value="<%= col._id %>"><%= col.name %></option>
+            <% }) %>
+          </select>
 
-    <p>Updated on:
-      <%= movie.updatedAt %>
-    </p>
-    <br>
-    <button id="deleteBtn" data-id="<%= movie._id %>">Delete movie</button>
-    <button id="editBtn">Edit movie</button>
-  </div>
+          <button
+            class="btn-default"
+            onclick="addToCollection('<%= movie._id %>')"
+          >
+            Add to Collection
+          </button>
+        </div>
 
-  <div id="editMovie" hidden>
-    <h3>Edit movie details</h3>
-    <form action="/:id" method="post">
-      <input type="text" required name="id" value="<%= movie._id %>" hidden><br>
-      <label>Title</label><br>
-      <input type="text" required name="title" value="<%= movie.title %>"><br>
-      <label>Short description</label><br>
-      <input type="text" required name="shortDesc" value="<%= movie.shortDesc %>"><br>
-      <label>Body</label><br>
-      <textarea cols="30" rows="10" required name="body"><%= movie.body %></textarea><br>
-      <button id="saveBtn">Save movie</button>
-    </form>
-  </div>
+        <div style="margin-top: 10px">
+          <input
+            type="text"
+            id="newCollectionName"
+            placeholder="New collection name"
+          />
+          <button onclick="createCollection()">Create Collection</button>
+        </div>
+      </div>
 
+      <div class="movie-media">
+        <% if (movie.imgPoster) { %>
+        <img src="<%= movie.imgPoster %>" alt="Poster" class="movie-poster" />
+        <% } %>
+      </div>
+    </div>
 
-  <%- include("./partials/footer.ejs") %>
+    <% if (trailerURL) { %>
+    <div class="movie-trailer-wrapper">
+      <video src="<%= trailerURL %>" controls class="movie-trailer"></video>
+    </div>
+    <% } %>
 
-  <script>
-    const deleteBtnElement = document.getElementById("deleteBtn");
-    const viewMovieDivElement = document.getElementById("viewMovie");
-    const editMocieDivElement = document.getElementById("editMovie");
-    const editBtnElement = document.getElementById("editBtn");
-    const saveBtnElement = document.getElementById("saveBtn");
-
-
-    deleteBtnElement.addEventListener("click", (e) => {
-      const backEndPoint = `/${deleteBtnElement.dataset.id}`;
-
-      fetch(backEndPoint, {
-          method: "DELETE"
-        })
-        .then((response) => response.json())
-        .then((responseJson) => window.location.href = responseJson.redirect)
-        .catch((error) => console.log(error));
-    });
-
-    editBtnElement.addEventListener("click", (e) => {
-      viewMovieDivElement.style.display = "none";
-      editMovieDivElement.style.display = "block";
-    });
-
-    saveBtnElement.addEventListener("click", (e) => {
-      viewMovieDivElement.style.display = "block";
-      editMovieDivElement.style.display = "none";
-    });
-  </script>
-</body>
-
+    <script src="/js/movieActions.js"></script>
+  </body>
 </html>

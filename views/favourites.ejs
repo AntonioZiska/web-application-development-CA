@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("./partials/head.ejs") %>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="/js/favouritesChart.js"></script>
+  <body class="history-body">
+    <%- include("./partials/nav.ejs") %>
+
+    <h1>Favourite Movies</h1>
+
+    <!-- Bar chart -->
+    <div class="box" style="max-width: 600px; margin: 40px auto">
+      <h2>Movies per Year</h2>
+      <canvas id="barChart"></canvas>
+    </div>
+
+    <!-- Favourite movies grid -->
+    <% if (movies.length) { %>
+    <div class="movie-grid">
+      <% movies.forEach((movie) => { %>
+      <a href="/movie/<%= movie._id %>" class="movie-card">
+        <% if (movie.imgPoster) { %>
+        <img src="<%= movie.imgPoster %>" alt="Poster" class="movie-poster" />
+        <% } %>
+        <div class="movie-info">
+          <h3><%= movie.title %> (<%= movie.year %>)</h3>
+        </div>
+      </a>
+      <% }) %>
+    </div>
+    <% } else { %>
+    <p>No favourites yet...</p>
+    <% } %>
+  </body>
+</html>

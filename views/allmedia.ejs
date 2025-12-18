@@ -4,12 +4,10 @@
   <body class="history-body">
     <%- include("./partials/nav.ejs") %>
 
-    <div style="margin: 20px 0; text-align: center">
-      <button class="btn-disabled" disabled>Recent History</button>
-      <button class="btn-default" onclick="window.location.href='/allmedia'">
-        Full History
-      </button>
-    </div>
+        <div style="margin: 20px 0; text-align: center">
+        <button class="btn-default" onclick="window.location.href='/'"">Recent History</button>
+        <button class="btn-disabled" disabled">Full History</button>
+        </div>
 
     <% if (movies.length) { %>
     <div class="movie-grid">

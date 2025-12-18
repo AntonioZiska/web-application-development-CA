@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
   <%- include("./partials/head.ejs") %>
-
   <body>
     <%- include("./partials/nav.ejs") %>
-    <h3>Create a new movie</h3>
-    <form action="/" method="POST">
-      <label>Title</label><br />
-      <input type="text" required name="title" /><br />
-      <label>Short description</label><br />
-      <input type="text" required name="shortDesc" /><br />
-      <label>Body</label><br />
-      <textarea cols="30" rows="10" required name="body"></textarea><br />
+
+    <h3>Add a new movie</h3>
+    <form action="/create" method="POST">
+      <label>Search by title:</label><br />
+      <input
+        type="text"
+        required
+        name="q"
+        placeholder="Enter movie name"
+      /><br /><br />
       <button>Create movie</button>
     </form>
-
-    <%- include("./partials/footer.ejs") %>
   </body>
 </html>

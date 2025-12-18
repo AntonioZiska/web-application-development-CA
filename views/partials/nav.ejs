@@ -1,4 +1,14 @@
 <nav>
-  <a href="/">Home</a> |
-  <a href="/create">Create movie</a>
+  <a href="/">Home</a> | <a href="/create">Create movie</a>
+  |
+  <a href="/favourites">favourites</a>
+  |
+
+  <select id="viewCollection">
+    <option value="">Select Collection</option>
+    <% collections.forEach((col) => { %>
+    <option value="/collections/<%= col._id %>"><%= col.name %></option>
+    <% }) %>
+  </select>
+  <button id="goCollectionBtn">View</button>
 </nav>
